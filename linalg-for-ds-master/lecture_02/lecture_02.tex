@@ -1,0 +1,244 @@
+\documentclass[11pt,nocut]{article}
+
+\usepackage{../latex_style/packages}
+\usepackage{../latex_style/notations}
+
+\title{\vspace{-2.0cm}%
+	Optimization and Computational Linear Algebra for Data Science\\
+	Lecture 2: Linear transformations}
+	\author{Léo \textsc{Miolane} \ $\cdot$ \ \texttt{leo.miolane@gmail.com}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\input{../preamble.tex}
+\section{Linear transformations}
+
+%\begin{center}
+%From now, we will always work with vector spaces of the form $\R^k$ for $k \in \N^*$.
+%\end{center}
+%\vspace{1.5mm}
+
+\begin{definition}[Linear transformation]
+	A function $L: \R^m \to \R^n$ is linear if
+	\begin{enumerate}[label=(\roman*)]
+		\item for all $v \in \R^m$ and all $\alpha \in \R$ we have $L(\alpha v) = \alpha L(v)$ and
+		\item for all $v,w \in \R^m$ we have $L(v + w) = L(v) + L(w)$.
+	\end{enumerate}
+\end{definition}
+
+Notice that $L: \R^m \to \R^n$ is linear if and only if $L(\alpha v + w) = \alpha L(v) + L(w)$ for all $v,w \in \R^m$ and all $\alpha \in \R$.
+
+%\begin{proposition}
+	%The set $\mathcal{L}(\R^m, \R^n)$ of all linear transformations from $\R^m$ to $\R^n$ is a vector space.
+%\end{proposition}
+
+\begin{proposition}
+	If $L: \R^m \to \R^n$ and $M: \R^n \to \R^k$ are two linear transformations, then the composite function $M \circ L: \R^m \to \R^k$ is also linear.
+\end{proposition}
+
+\begin{remark} Let $L: \R^m \to \R^n$ be a linear transformation. Then
+	\begin{itemize}
+		\item $L(0) = L(0.0) = 0.L(0) = 0$.
+		\item $L\big(\sum_{i=1}^k \alpha_i v_i \big) = \sum_{i=1}^k \alpha_i L(v_i)$.
+	\end{itemize}
+\end{remark}
+
+Let $(e_1, \dots, e_m)$ be the canonical basis of $\R^m$.
+As a consequence of the second point above we have that for all $x = (x_1, \dots, x_m) \in \R^m$:
+$$
+L(x) = 
+L\big( \sum_{i=1}^m x_i e_i \Big) = \sum_{i=1}^m x_i L(e_i).
+$$
+This means that a linear transformation $L: \R^m \to \R^n$ is uniquely characterized by the vectors $L(e_1), \dots, L(e_m) \in \R^n$.
+
+%\begin{theorem}[Equality on a basis implies equality everywhere]\label{th:basis_cara}
+	%Let $L$ and $M$ be two linear transformations from $\R^m$ to $\R^n$.
+	%Let $(v_1, \dots, v_m)$ be a basis of $\R^m$ and suppose that for all $i \in \{1, \dots,m\}$ we have
+	%$$
+	%L(v_i) = M(v_i).
+	%$$
+	%Then $L = M$, i.e.\ $L(v) = M(v)$ for all $v \in \R^m$.
+%\end{theorem}
+
+\section{Matrix representation}
+
+
+\begin{definition}
+	A $n \times m$ matrix is an array (of real numbers) with $n$ rows and $m$ columns.
+	We denote by $\R^{n \times m}$ the set of all $n \times m$ matrices.
+\end{definition}
+
+We can encode a linear transformation $L: \R^m \to \R^n$ by a $n \times m$ matrix.
+\begin{definition}\label{def:canonical_matrix}
+	Let $L: \R^m \to \R^n$ be a linear transformation.
+	The canonical matrix of $L$ is the $n \times m$ matrix (that we will write also $L$) whose columns are $L(e_1), \dots, L(e_m)$:
+$$
+L =
+\begin{pmatrix}
+	| & | & & | \\
+	L(e_1) & L(e_2) & \cdots& L(e_m) \\
+	| & | & & |
+\end{pmatrix}
+= 
+\begin{pmatrix}
+	L_{1,1} & L_{1,2} & \cdots & L_{1,m} \\
+	L_{2,1} & L_{2,2} & \cdots & L_{2,m} \\
+	\vdots & \vdots & \ddots & \vdots \\
+	L_{n,1} & L_{n,2} & \cdots & L_{n,m} \\
+\end{pmatrix}
+$$
+where we write $L(e_j) = 
+\begin{pmatrix}
+	L_{1,j} \\
+	L_{2,j}\\
+	\vdots \\
+	L_{n,j}
+\end{pmatrix}$.
+\end{definition}
+
+\begin{example}[Homothety]
+	Let $\lambda \in \R$. The mapping (called ``homothety of ratio $\lambda$'')
+	$$
+	\begin{array}{cccc}
+		L: & \R^n & \to & \R^n \\
+		   & x & \mapsto & \lambda x
+	\end{array}
+	$$
+	is linear. The canonical matrix of $L$ is 
+	$$
+	\begin{pmatrix}
+		\lambda & 0 & 0 & \cdots & 0 \\
+		0 & \lambda & 0 & \cdots & 0 \\
+		0 & 0 &\lambda &  \cdots & 0 \\
+		\vdots & \vdots& \vdots & \ddots & \vdots \\
+		0 & 0 & 0 & \cdots & \lambda
+	\end{pmatrix}
+	.
+	$$
+	In the case where $\lambda = 1$, $L$ is simply the identity, its matrix is called the identity matrix and denoted by
+	$$\Id_n
+	\ \defeq \
+	\begin{pmatrix}
+		1 & 0 & 0 & \cdots & 0 \\
+		0 & 1 & 0 & \cdots & 0 \\
+		0 & 0 &1 &  \cdots & 0 \\
+		\vdots & \vdots& \vdots & \ddots & \vdots \\
+		0 & 0 & 0 & \cdots & 1
+	\end{pmatrix}.
+	$$
+\end{example}
+
+Definition \ref{def:canonical_matrix} tells us that one can associate a matrix to a linear transformation. The next definition show that one can do the reverse operation: we can obtain a linear transformation from a matrix.
+
+\begin{definition}
+	The linear transformation associated to a matrix $L \in \R^{n \times m}$ is the map
+	$$
+	\begin{array}{cccc}
+		L:& \R^m & \to & \R^n \\
+		  & x & \mapsto & Lx
+	\end{array}
+	$$
+	where the ``matrix-vector'' product $Lx \in \R^n$ is defined by
+	$$
+	(Lx)_i = \sum_{j=1}^m L_{i,j} x_j \qquad \text{for all} \ i \in \{1, \dots, n\}.
+	$$
+\end{definition}
+
+\begin{definition}[Matrix product]
+	Let $L \in \R^{n \times m}$ and $M \in \R^{m \times k}$. 
+	We define the matrix product $LM$ as the $n \times k$ matrix of the linear transformation $L \circ M$.
+	His coefficients are given by the formula:
+	$$
+	(LM)_{i,j} = \sum_{\ell=1}^m L_{i,\ell} M_{\ell,j} \quad \text{for all} \quad 1 \leq i \leq n, \quad 1 \leq j \leq k.
+	$$
+\end{definition}
+
+%\begin{proposition}[Matrix product means composition of linear transformations]
+	%Let $L: \R^m \to \R^n$ and $M: \R^n \to \R^k$ be two linear transformations whose matrices are also denoted by $L \in \R^{n \times m}$ and $M \in \R^{k \times n}$.
+	%Then the $k \times m$ matrix $ML$ is the matrix of the linear transformation $M \circ L: \R^m \to \R^k$.
+%\end{proposition}
+
+\begin{proposition}
+	Let $A \in \R^{p \times q}$, $B \in \R^{q \times r}$ and $C \in \R^{r \times s}$. Then
+	$$
+	(AB) C = A (BC).
+	$$
+\end{proposition}
+
+%\begin{proposition}[Matrix inverse]\label{prop:matrix_inverse}
+	%Let $M \in \R^{n \times n}$. Assume that there exists a matrix $M^{-1} \in \R^{n \times n}$ such that 
+	%$$
+	%M M^{-1} = \Id_n \quad \text{or, such that} \quad M^{-1} M = \Id_n.
+	%$$
+	%Then $M M^{-1} = M^{-1} M = \Id_n$ and $M^{-1}$ is the unique matrix that verifies this property.
+	%We say that $M$ is \emph{invertible} and the matrix $M^{-1}$ is called the \emph{inverse} of $M$.
+%\end{proposition}
+
+%\begin{remark}
+	%$M \in \R^{n \times n}$ is invertible if and only if the linear transformation associated to $M$ is a bijection. In that case, $M^{-1}$ is the matrix associated to the inverse transformation.
+%\end{remark}
+
+\section{Kernel and image}
+
+\begin{definition}[Kernel]
+	The kernel $\Ker(L)$ (or nullspace) of a linear transformation $L: \R^m \to \R^n$ is defined as the set of all vectors $v \in \R^m$ such that $L(v) = 0$, i.e.
+	$$
+	\Ker(L) \defeq \big\{ v \in \R^m \, \big| \, L(v) = 0 \big\}.
+	$$
+\end{definition}
+
+\begin{definition}[Image]
+	The image $\Im(L)$ (or column space) of a linear transformation $L: \R^m \to \R^n$ is defined as the set of all vectors $u \in \R^n$ such that there exists $v \in \R^m$ such that $L(v) = u$. 
+	$\Im(L)$ is also the Span of the columns of the matrix representation of $L$.
+\end{definition}
+
+\begin{proposition}\label{prop:inj_sur}
+	$\Ker(L)$ and $\Im(L)$ are subspaces of respectively $\R^m$ and $\R^n$. We have
+	\begin{center}
+		$L$ injective \ $\Longleftrightarrow$ \ $\Ker(L) = \{0 \}$
+	\end{center}
+	and
+	\begin{center}
+		$L$ surjective \ $\Longleftrightarrow$ \ $\Im(L) = \R^n$.
+	\end{center}
+\end{proposition}
+%\vspace{1cm}
+
+\paragraph{Application: Solutions of a linear system.}
+We are interested into solving the system of equations in $x = (x_1, \dots, x_m) \in \R^m$
+\begin{equation}\label{eq:system}
+	\left\{
+		\begin{array}{ccccccccc}
+		a_{1,1} x_1 &+& a_{1,2} x_2 &+& \dots &+& a_{1,m} x_m &=& y_1 \\
+		\vdots &&&&&&&& \\
+		a_{n,1} x_1 &+& a_{n,2} x_2 &+& \dots &+& a_{n,m} x_m &=& y_n
+	\end{array}
+	\right.
+\end{equation}
+where $a_{i,j} \in \R$ and $y = (y_1, \dots, y_n) \in \R^n$. If we define the matrix $A \in \R^{n \times m}$ by $A_{i,j} = a_{i,j}$ the system \eqref{eq:system} can be rewritten as
+$$
+A x = y.
+$$
+Solving \eqref{eq:system} precisely mean << finding the inverse image of $y$ by $A$ >>. From the definition of $\Im(A)$ we get that 
+\textbf{the equation $Ax = y$ admits (at least) a solution $x_0$ if and only if $y \in \Im(A)$}.
+\\
+
+We suppose now to be in that case. We would now like to know if there are other solutions. Let $x$ be another solution to $Ax = y$. By subtraction we get 
+$$
+A(x - x_0) = y - y = 0.
+$$
+This means that $(x - x_0) \in \Ker(A)$: any solution of $Ax = y$ can therefore be written as $x = x_0 + v$ with $v \in \Ker(A)$. Conversely, one can verify easily that any vector of this form is a solution. We conclude that if the equation $Ax = y$ admits a solution $x_0$, then the set of \textbf{all} solutions is
+$$
+x_0 + \Ker(A) \defeq \big\{ x_0 + v \, \big| \, v \in \Ker(A) \}.
+$$
+In particular, \textbf{$x_0$ is the unique solution if and only if $\Ker(A) = \{0\}$}.
+
+
+
+	\vspace{1cm}
+	\centerline{\pgfornament[width=7cm]{71}}
+
+%\bibliographystyle{plain}
+%\bibliography{./references.bib}
+\end{document}

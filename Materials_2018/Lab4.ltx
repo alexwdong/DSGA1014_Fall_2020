@@ -1,0 +1,150 @@
+\section{Recitation 4}
+It may be helpful if after recitation you try to re-solve these
+problems by yourself, and use them as additional study problems for
+the class.
+\begin{enumerate}
+\item Let $A,B\in\RR^{n\times n}$.  Prove that $AB$ is invertible
+  iff $A$ and $B$ are invertible.
+\begin{solution}
+\item[]\Sol
+  \begin{proof}
+    First suppose $A$ and $B$ are invertible.  We claim that
+    $(AB)^{-1}=B^{-1}A^{-1}$.  To see this note that
+    $$(B^{-1}A^{-1})(AB) = B^{-1}(A^{-1}A)B = B^{-1}IB = B^{-1}B=I.$$
+    Conversely, suppose that $AB$ is invertible.  Since $Bx=0$ implies
+    $ABx=0$ we must have $\ker(B)=\{0\}$ (which is equivalent to
+    $\rank(B)=n$ by the fundamental theorem). Furthermore, since
+    $\rank(AB)\leq \rank(A)$ (from homework 3) we must have
+    $\rank(A)=n$.  But an $n\times n$ matrix is invertible iff it has
+    $\rank(n)$, thus the proof is complete.
+  \end{proof}
+\end{solution}
+\item Let $A\in\RR^{m\times n}$.  Under what conditions is
+  there a matrix
+  $B$ such that $AB=I$ where $I$ is the $m\times m$ identity matrix?
+\begin{solution}
+\item[]\Sol The condition is $\rank(A)=m$.  To see this note that the $i$th column
+  of $AB$ is equal to $Ab_i$ where $b_i$ is the $i$th column of $b$.
+  Thus the question can be reformulated as: ``When can the equation
+  $Ax=e_i$ be solved for each $i$?''  This is the same as saying
+  $e_i\in\im(A)$ for $i=1,\ldots,m$, which is the same as saying $\im(A)=\RR^m$.
+\end{solution}
+\item Let $A\in\RR^{m\times n}$.
+  Under what conditions is there a
+  matrix $B$ such that $BA=I$ where $I$ is the $n\times n$ identity
+  matrix?
+\begin{solution}
+\item[]\Sol When $\rank(A)=n$, or equivalently, when $\ker(A)=\{0\}$.
+  To see note that $BA=I$ iff $A^TB^T=I$, and apply the previous exercise.
+\end{solution}
+\item Determine which of the following statements are equivalent.
+  Below $A\in\RR^{m\times n}$.
+  \begin{enumerate}
+  \item The columns of $A$ are linearly independent.
+  \item The rows of $A$ are linearly independent.
+  \item $\rank(A)=n$.
+  \item $\rank(A)=m$.
+  \item The equation $Ax=0$ has exactly one solution $x\in\RR^n$.
+  \item $Ax=b$ has at least one solution $x\in\RR^n$ for every $b\in\RR^m$.
+  \item $\ker(A)=\{0\}$.
+  \item The span of the columns of $A$ is $\RR^m$.
+  \item $\im(A)=\RR^m$.
+  \item $\im(A^T)=\RR^n$.
+  \item The linear transformation corresponding to $A$ is one-to-one.
+  \item The linear transformation corresponding to $A$ is onto.
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol The following groups of statements are equivalent.
+  \begin{itemize}
+  \item a, c, e, g, j, k
+  \item b, d, f, h, i, l
+  \end{itemize}
+\end{solution}
+\item Explain why each of the following functions $f:\RR^3\times\RR^3\to\RR$
+  is not an inner product.
+  \begin{enumerate}
+  \item $f(x,y) = x_1y_2 + x_2y_3 + x_3y_1$
+  \item $f(x,y) = x_1^2y_1^2 + x_2^2y_2^2 + x_3^2y_3^2$
+  \item $f(x,y) = x_1y_1 + x_2y_2$
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item $f(e_1,e_1)=0$ (must be $>0$)
+  \item $f(2e_1,e_1)=2^2f(e_1,e_1)$ (instead of $2f(e_1,e_1)$)
+  \item $f(e_3,e_3)=0$ (must be $>0$)
+  \end{enumerate}
+\end{solution}
+\item Let $x=(\cos\theta_1,\sin\theta_1)\in\RR^2$ and
+  $y=(\cos\theta_2,\sin\theta_2)\in\RR^2$ be two vectors on the unit
+  circle (i.e., $\|x\|=1=\|y\|$).  Explain the phrase ``$x^Ty$ gives a
+  measure of the angle between $x$ and $y$.''
+\begin{solution}
+\item[]\Sol Note that
+  $$x^Ty = \cos(\theta_1)\cos(\theta_2)+\sin(\theta_1)\sin(\theta_2) =
+  \cos(\theta_1-\theta_2),$$
+  so for vectors on the unit circle, the Euclidean inner product gives
+  the cosine of the angle between them.
+
+  In general we have $x^Ty = \|x\|\|y\|\cos(\theta)$ where $\theta$ is
+  the angle between $x$ and $y$ measured in the plane $\Span(x,y)$.
+\end{solution}
+\item Let $x=(x_1,\ldots,x_m)\in\RR^m$ and
+  $y=(y_1,\ldots,y_n)\in\RR^n$.  For $A\in\RR^{m\times n}$ compute
+  $x^TAy$ in terms of the entries of $x$, $y$, and $A$.
+\begin{solution}
+\item[]\Sol
+  $$x^TAy=\sum_{i=1}^m\sum_{j=1}^n A_{ij}x_iy_j$$
+\end{solution}
+\item Suppose you have the equation $LUx=b$ where $L\in\RR^{n\times n}$ is a lower
+  triangular matrix, $U\in\RR^{n\times n}$ is an upper triangular
+  matrix, and $b\in\RR^n$ is a fixed vector.  Give a procedure for how
+  you could solve for $x$ using only ``substitution'' as described in
+  class.
+\begin{solution}
+\item[]\Sol First solve $Ly=b$ for $y$.  Then solve $Ux=y$ for $x$.
+\end{solution}
+\item Fix $A\in\RR^{m\times n}$ and $b\in\RR^m$ and suppose the set
+  $$S = \{x\in\RR^n : Ax = b\}$$
+  is non-empty.
+  \begin{enumerate}
+  \item Under what conditions is $S$ a subspace of $\RR^n$?
+  \item Suppose $S$ is not a subspace of $\RR^n$.  Show there is a
+    $v\in\RR^n$ such that
+    $$S-v := \{ x-v : x\in S\}$$
+    is a subspace.  What does this say geometrically?
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item $S$ is a subspace iff $b=0$ (so that $S=\ker(A)$).  Otherwise
+    $0\notin S$.
+  \item Let $v$ be any element of $S$.  Then we claim that
+    $S-v=\ker(A)$.  To see this note that for any $x\in S$ we have
+    $$A(x-v) = Ax-Av = b-b = 0.$$
+    Geometrically, this says that the solution set to a linear system,
+    if it is non-empty, has the form $\ker(A)+v$ where $v$ is any solution.
+  \end{enumerate}
+\end{solution}
+\item Prove or disprove: Let $n>1$. Every $A\in\RR^{n\times n}$ can be written as
+  $A=LU$ where $L$ is lower triangular and $U$ is upper triangular.
+\begin{solution}
+\item[]\Sol False.  Let $M\in\RR^{2\times 2}$ be defined by
+  $$M=\MAT{0&1\\1&0}.$$
+  Suppose $M=LU$.  Since $\rank(M)=2$ it must be that 
+  $$L=\MAT{L_{1,1} & 0\\L_{2,1} & L_{2,2}}$$
+  with $L_{1,1}\neq 0$.  But since $M_{1,1}=0$ we must have
+  $$U=\MAT{U_{1,1} & U_{1,2}\\ 0 & U_{2,2}}$$
+  with $U_{1,1}=0$.  But then $\rank(U)<2$ a contradiction (since then
+  $\ker(U)\neq \{0\}$ so $\ker(LU)\neq\{0\}$).
+\end{solution}
+\item Suppose you are given $A\in\RR^{m\times n}$ and $b\in\RR^m$.
+  How do you solve the equation $Ax=b$ using Python?
+\begin{solution}
+\item[]\Sol
+  Use \begin{lstlisting}[language=Python,showstringspaces=false]
+    numpy.linalg.lstsq
+  \end{lstlisting} and check if the returned vector $x$ has small
+  residual: $\|Ax-b\|$.
+\end{solution}
+\end{enumerate}

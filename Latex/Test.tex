@@ -1,0 +1,135 @@
+\documentclass{beamer}
+\usepackage{amsthm}
+\usepackage[utf8]{inputenc}
+\usetheme{madrid}
+\usepackage{../latex_style/packages}
+\usepackage{../latex_style/notations}
+\usepackage{outlines}
+
+\def\labelenumi{\theenumi}
+
+\setbeamertemplate{itemize items}[default]
+\setbeamertemplate{enumerate items}[default]
+
+\newcommand\Fonteight{\fontsize{8}{9.6}\selectfont}
+
+%Information to be included in the title page:
+\title{Recitation 1 }
+\author{Alex Dong}
+\institute{CDS, NYU}
+\date{Fall 2020}
+
+
+\makeatletter
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor\expandafter\ifblank\expandafter{\beamer@shortinstitute}{}{~~(\insertshortinstitute)}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother
+
+\begin{document}
+%1
+\frame{\titlepage} 
+%2
+\begin{frame}
+\frametitle{Announcements}
+\end{frame}
+
+%2
+\begin{frame}
+\frametitle{Why is Linear Algebra important?}
+Linear Algebra ...
+\begin{itemize}
+\item Appears in ALL applied math, including \textit{data science}
+\item Is solvable. If you can write it down, you can solve it! \\
+    \qquad (not true for other math, e.g differential equations, integration)
+\item Is \textit{fundamental} to understanding tools in machine learning
+
+\end{itemize}
+
+Relevant applications we will cover in the class:
+\begin{itemize}
+\item Linear Regression
+\item Principal Component Analysis
+\item Gradient Descent
+\end{itemize}
+
+\end{frame}
+%3
+\begin{frame}
+\frametitle{Concept Review: Vector Spaces}
+\begin{definition}[Vector space]
+	    
+	    $V$ is a vector space over field $F$ when
+	    \Fonteight
+		\begin{enumerate}
+		\item[1.] Closure under Addition: $x+y \in V$
+		\item[2.] Sum is commutative ($x+y = y+x$) and associative $x+(y+z)= (x+y)+z$
+		\item[3.] Additive Identity (in $V$): $0\in V$ ($x+0 =x$)
+		\item[4.] Additive Inverse: ($\forall x, \exists -x $ s.t $ x+(-x)=0$
+		\item[5.] Closure under Scalar Multiplication: $\alpha x \in V$
+		\item[6.] Multiplicative Identity (in $F$): $\alpha x \in V$
+		\item[7.] Compatibility in Multiplication: $\alpha (\beta x) = (\alpha \beta) x $
+		\item[8.] Distributivity: $(\alpha + \beta) x = \alpha x + \beta \cdot \vec{y}
+			 \text{ and }
+			\alpha  (x + y) = \alpha  x + \alpha \cdot y.$
+		\end{enumerate}
+\end{definition}
+Notice that "vectors" are not explicitly defined. \\
+
+Optional: prove (after class) that $\R^3$ with standard definitions for addition and scalar multiplication is vector space over field $\R$ .
+
+\end{frame}
+%4
+\begin{frame}
+\frametitle{Concept Review: Vector Spaces}
+In this class,
+\begin{itemize}
+\item Our field is always $\R$. ($\C$ is also a field)
+\item Standard definitions for vector addition, and scalar multiplication
+\item But, V is (usually) $\R^n$, or (sometimes) $\R^{n\times n}$
+\end{itemize}
+
+
+Everything in Linear Algebra is in a vector space.
+\end{frame}
+\begin{frame}
+\frametitle{Concept Review: Subspaces}
+\begin{definition}[Subspace]
+	A subset $S$ of a vector space $V$ is a \emph{subspace} if it is closed under addition and scalar multiplication.
+	\begin{enumerate}
+		\item[1.] Closure under Addition: $x+y \in V$
+		\item[2.] Closure under Scalar Multiplication: $\alpha x \in V$
+	\end{enumerate}
+\end{definition}
+A subspace is also a vector space!\\
+Everything in linear algebra is in a vector space. \\ 
+Anything \textit{interesting} in linear algebra is in a subspace.
+Subspaces are a recurrent concept throughout this entire course.
+\end{frame}
+\begin{frame}
+\frametitle{Questions 1: Subspaces, Span}
+
+\end{frame}
+\begin{frame}
+
+
+
+\frametitle{Solutions 1, Linear Independence, Bases, }
+
+\end{frame}
+
+
+
+\end{document}

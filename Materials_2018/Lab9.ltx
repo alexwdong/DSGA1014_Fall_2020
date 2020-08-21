@@ -1,0 +1,164 @@
+\section{Recitation 9}
+It may be helpful if after recitation you try to re-solve these
+problems by yourself, and use them as additional study problems for
+the class.
+\begin{enumerate}
+\item Define $x_1=(4,1)$, $x_2=(-3,1)$, and $x_3=(1,1)$.
+  \begin{enumerate}
+  \item Give a
+    one-dimensional affine subspace of $\RR^2$ that best approximates
+    these three points.
+    \item Use this to represent each point using a single number
+      (i.e., reduce the dimension from 2 to 1).
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item $\{(a,1) : a\in\RR\}=e_2+\Span(e_1)$
+  \item Using the representation above we can write
+    $$x_1=e_2+4e_1,\quad x_2=e_2-3e_1,\quad x_3=e_2+e_1$$
+    giving $\hat{x}_1=4$, $\hat{x}_2=-3$, $\hat{x}_3=1$.  Note that
+    these do not add to $0$.  We could instead use the sample mean
+    $\mu=(2/3,1)^T$ and
+    write the affine subspace as $\mu+\Span(e_1)$ (note this is the
+    same affine subspace).  The resulting
+    coefficients would then sum to zero.  In PCA we always use the
+    sample mean.
+  \end{enumerate}
+\end{solution}
+\item Suppose $x_1,\ldots,x_n\in\RR^p$ are datapoints you want to
+  represent in $k<p$ dimensions.
+  \begin{enumerate}
+  \item Explain how to do this using PCA.
+  \item How do you determine a value for $k$?
+  \item How can you implement PCA using the SVD?
+  \item Why should we perform dimensionality reduction?
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item Here are the steps:
+    \begin{enumerate}
+    \item Let $X$ be the matrix with $x_i$ as its $i$th column, and
+      then subtract the sample mean $\mu$ from each column giving
+      $\tilde{X}$.
+    \item Form the sample covariance matrix
+      $\Sigma=\frac{1}{n-1}\tilde{X}\tilde{X}^T$.
+    \item Choose the first $k$ eigenvectors $v_1,\ldots,v_k$ from the
+      spectral decomposition of $\Sigma$ corresponding to the largest
+      $k$ eigenvalues.  These are called the first $k$ principal
+      directions or loading vectors.
+    \item Compute the coefficients of the data when you project onto
+      the first $k$ eigenvectors:
+      $$\hat{X} = Q^T\tilde{X}$$
+      where $Q\in\RR^{p\times k}$ is the matrix whose $i$th column is
+      $v_i$.
+      Then $\hat{X}\in\RR^{k\times n}$ contains the lower dimensional
+      representation.
+    \end{enumerate}
+  \item Use a scree plot (look for elbow).
+  \item Write $\tilde{X}=V\Sigma U^T$.  Then
+    $$(n-1)\Sigma=\tilde{X}\tilde{X}^T=V\Sigma\Sigma^TV^T.$$
+    Thus we can use the first $k$ left singular vectors to perform the
+    projection.
+  \item Here are some reasons:
+    \begin{enumerate}
+    \item Allows us to visualize high dimensional data.
+    \item Can reduce the size of the data that we input into other
+      learning algorithms downstream in our ML pipeline.
+    \item Can act as a form of regularization (e.g., discrete version of
+      ridge regression called principal component regression).
+    \end{enumerate}
+  \end{enumerate}
+\end{solution}
+\item Suppose there are two eigenvectors of the covariance matrix
+  that correspond to large eigenvalues, and the rest of the
+  eigenvalues are small.  How do we interpret this?
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item There is a good two-dimensional affine subspace approximating
+    the data.  We can also say that two directions carry most of the
+    variance of the data.  Note that these directions are linear
+    combinations of features (i.e., baskets of features), so it may be
+    hard to interpret what they mean.
+  \end{enumerate}
+\end{solution}
+\item Let $x_1,\ldots,x_n\in\RR^p$, and fix a direction $w\in\RR^p$
+  with $\|w\|=1$.  We define the variance along the direction $w$ by
+  $$\frac{1}{n-1}\sum_{i=1}^n (w^Tx_i - w^T\mu)^2$$
+  where $\mu = \frac{1}{n}\sum_{i=1}^n x_i$.  On the homework we
+  will see that the first eigenvector of the covariance matrix gives
+  the direction with maximum variance.  Why is this desirable?
+\begin{solution}
+\item[]\Sol If we project onto a direction with low variance, then we
+  are destroying information present in the data.  The hope is that
+  the variability present in the data is informative, and will be
+  useful for our ML techniques (prediction, clustering, etc.).
+\end{solution}
+\item Someone suggests that you should standardize each feature before
+  running PCA (i.e., subtract the mean of each feature, and then
+  divide by the standard deviation).  Does this have any effect?    
+\begin{solution}
+\item[]\Sol If we compute the spectral decomposition $XX^T$ instead of
+  $\tilde{X}\tilde{X}^T$ (i.e., if we don't center the data first)
+  then the principal components will be influenced by the location of
+  the mean (e.g., the first principal direction may point toward the
+  mean of the data).  Stated differently, we will try to approximate
+  the data with a low dimensional linear subspace through the origin
+  instead of an affine subspace, leading to a biased less accurate
+  approximation.
+
+  If we do not standardize the data then the units
+  used to measure each feature can play a large role in the principal
+  directions.  For example, changing from meters to centimeters will
+  multiply the feature by 100, which will scale the variance in that
+  direction by 10000.  PCA always favors directions with larger
+  variance, so this will skew the results.  This is why we often use
+  the correlation matrix instead of the covariance matrix for PCA.
+  You may not want to standardize the data if you think the
+  differences in scale are informative (maybe the data is already
+  measured in the same units).
+\end{solution}
+\item Suppose $A\in\RR^{n\times n}$ (not necessarily symmetric)
+  has a linearly independent list
+  of $n$ eigenvectors $v_1,\ldots,v_n$ with eigenvalues
+  $\lambda_1,\ldots,\lambda_n$.  Can we factor $A$ in a way similar
+  to the spectral decomposition?
+\begin{solution}
+\item[]\Sol Yes, we can write $A$ as
+  $$A = V\Lambda V^{-1}.$$
+  Note that $V$ need not be orthogonal here.
+\end{solution}
+\item The Fibonacci sequence is defined by $F_0=0$, $F_1=1$, and
+  $F_{k+2}=F_{k+1}+F_k$ for $k\geq0$.  How quickly does $F_k$ grow
+  (linearly, polynomially, exponentially)?
+\begin{solution}
+\item[]\Sol Note that
+  $$\MAT{F_{k+2}\\F_{k+1}} = \MAT{1 & 1\\1 & 0}\MAT{F_{k+1}\\F_k}$$
+  so that
+  $$\MAT{F_{n+1}\\F_n} = \MAT{1 & 1\\1 & 0}^n\MAT{F_1\\F_0}.$$
+  This matrix has 2 linearly independent eigenvectors
+  $$v_1 = \MAT{\lambda_1\\1}\quad v_2 =\MAT{\lambda_2\\1}$$
+  with eigenvalues
+  $$\lambda_1 = \frac{1+\sqrt{5}}{2}, \lambda_2 =
+  \frac{1-\sqrt{5}}{2}.$$
+  While these vectors are orthogonal, they are not normalized to keep
+  the expressions simple.
+  If you know about characteristic polynomials or some other technique
+  you can compute these by hand.  Otherwise, you can use
+  numpy.linalg.eig.  Note that
+  $$\begin{array}{rcl}
+    \MAT{F_{n+1}\\F_n}
+    & = & \MAT{1 & 1\\1 & 0}^n\MAT{1\\0}\\
+    & = & \left(V\Lambda V^{-1}\right)^n\MAT{1\\0}\\
+    & = & (V\Lambda^n V^{-1})\frac{v_1-v_2}{\sqrt{5}}\\
+    & = & \lambda_1^n \frac{v_1}{\sqrt{5}} - \lambda_2^n \frac{v_2}{\sqrt{5}}.
+  \end{array}$$
+  Thus $F_n$ is given by
+  $$F_n=\frac{\lambda_1^n - \lambda_2^n}{\sqrt{5}}.$$
+  Since $|\lambda_1|>|\lambda_2|$ we see the $\lambda_1^n$ term
+  dominates giving
+  $$F_n \sim \frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^n.$$
+\end{solution} 
+\end{enumerate}

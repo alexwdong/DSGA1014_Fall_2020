@@ -1,0 +1,282 @@
+\section{Recitation 11}
+It may be helpful if after recitation you try to re-solve these
+problems by yourself, and use them as additional study problems for
+the class.
+\begin{enumerate}
+\item Let $f(x) = -e^{-x^2/2}$.  Is $f$ convex?
+\begin{solution}
+\item[]\Sol No. $f'(x) = xe^{-x^2/2}$ and $f''(x)=(1-x^2)e^{-x^2/2}$ which
+  is negative for $x>1$.
+\end{solution}
+\item Prove that $e^x \geq 1+x$ and $e^x \geq ex$ for all $x\in\RR$.
+\begin{solution}
+\item[]\Sol Note that $e^x$ is convex since if $f(x)=e^x$ then
+  $f''(x)=e^x>0$.  Also note that $f'(0)=1$ and $f'(1)=e$.  Thus the
+  tangent lines given by $1+x$ and $e^x$ must globally underestimate
+  the function.
+\end{solution}
+\item Let $f:\RR^n\to\RR$ be defined by $f(x)=\log(1+x^TAx)$ where
+  $A\in\RR^{n\times n}$ is symmetric and positive semidefinite.
+  Compute $\nabla f(x)$.
+\begin{solution}
+\item[]\Sol We can apply the chain rule.  Let $g(t)=\log(t)$ and
+  $h(x)=1+x^TAx$ so that $f(x)=g(h(x))$.  Then we have
+  $$\nabla f(x) = g'(h(x))\nabla h(x) =
+  \left(\frac{1}{1+x^TAx}\right)(2Ax).$$
+  To see that $\nabla h(x)=2Ax$ we can either apply the homework
+  result or use the following calculation:
+  $$h(x+v) = 1+(x+v)^TA(x+v) = 1+x^TAx+2x^TAv+v^TAv =
+  h(x)+2x^TAv+v^TAv.$$
+  Thus $\nabla h(x)^T=2x^TA$ since
+  $$\left|\frac{h(x+v)-h(x)-2x^TAv}{\|v\|}\right| =
+  \frac{|v^TAv|}{\|v\|}\leq\frac{\|A\|\|v\|^2}{\|v\|}\to0.$$
+\end{solution}
+\item Let $f:\RR\to\RR$ be convex and differentiable.  Prove that
+  for all $x,h\in\RR$ that
+  $$f(x+h) \geq f(x) + f'(x)h.$$
+\begin{solution}
+\item[]\Sol
+  \begin{proof}
+  Suppose, for contradiction, there is an $x,h$ with
+  $$f(x+h) < f(x)+f'(x)h.$$
+  We assume $h>0$ (a similar proof holds for $h<0$, or we could just
+  apply the result proven below to $g(x)=f(-x)$, which is also convex).
+  Define $\alpha>0$ such
+  that
+  $$f(x+h) = f(x)+(f'(x)-\alpha)h.$$
+  In other words
+  $$\alpha := -\frac{f(x+h)-f(x)-f'(x)h}{h} > 0.$$
+  By convexity we have, for all $t\in(0,1)$,
+  $$\begin{Array}{rcl}
+    f(x+th)
+    & = & f( (1-t)x+t(x+h) )\\
+    & \leq & (1-t)f(x)+tf(x+h) \\
+    & = & (1-t)f(x)+tf(x)+t(f'(x)-\alpha)h\\
+    & = & f(x)+t(f'(x)-\alpha)h.
+  \end{Array}$$
+  Rearranging we have
+  $$\frac{f(x+th)-f(x)}{th} < f'(x)-\alpha$$
+  for all $t$.  Letting $t\to0$ shows
+  $$f'(x) < f'(x)-\alpha,$$
+  a contradiction.
+  \end{proof}
+\end{solution}
+\item Let $f:\RR^n\to\RR$ be convex and differentiable.  Prove that
+  for all $x,h\in\RR^n$ that
+  $$f(x+h) \geq f(x) + \nabla f(x)^Th.$$
+\begin{solution}
+\item[]\Sol
+  \begin{proof}
+  Suppose, for contradiction, there is an $x,h\in\RR^n$ with
+  $$f(x+h) < f(x) + \nabla f(x)^Th.$$
+  Define $g:\RR\to\RR$ by $g(t)=f(x+th)$.  Then $g$ is convex and the
+  above statement says that
+  $$g(1) < g(0) + g'(0).$$
+  But this is impossible by the previous problem.
+  \end{proof}
+\end{solution}
+\item Suppose $A\in\RR^{2\times 2}$ is symmetric with positive eigenvalues.
+  Describe geometrically
+  the contour lines of $f:\RR^2\to\RR$ given by $f(x)=x^TAx$.
+  Recall that the contour line for value $\gamma$ is given by
+  $$\{x\in\RR^2 : f(x) = \gamma\}.$$
+\begin{solution}
+\item[]\Sol First suppose $A$ is diagonal:
+  $$A = \MAT{\lambda_1&0\\0&\lambda_2}.$$
+  Then $x^TAx = \lambda_1x_1^2 + \lambda_2x_2^2$.  Thus solving
+  $f(x)=\gamma$ is the equation for an elippse.  By the spectral
+  theorem, any symmetric matrix is diagonal up to a rotation.  Thus
+  generally we obtain a rotated ellipse.
+\end{solution}
+\item Suppose $f:\RR^2\to\RR$ is defined by $f(x)=x_1^2 + 100x_2^2$.
+  Explain what issues this may pose for gradient descent.
+\begin{solution}
+\item[]\Sol The contour lines of $f$ are very eccentric ellipses.
+  Gradient descent started at $(-1,0.1)$ will take many steps to converge.
+\end{solution}
+\item
+  \begin{enumerate}
+  \item Give a quadratic approximation $q(h)$ to $f(x+h)$ at $x$.
+  \item What is the minimizer of the quadratic approximation assuming
+    the Hessian is positive definite (has positive eigenvalues)?
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item
+    $$\begin{Array}{rcl}
+    f(x+h)
+    & \approx & f(x) + \nabla f(x)^Th + \frac{1}{2}h^T\nabla^2 f(x) h\\
+    & = & f(x) + \sum_{i=1}^n \frac{\partial f(x)}{\partial x_i}h_i
+    + \frac{1}{2}\sum_{i,j=1}^n \frac{\partial^2 f(x)}{\partial
+      x_i\partial x_j}h_ih_j\\
+    & =: & q(h).
+  \end{Array}$$
+    To get the result from class, we let $h=y-x$ to obtain
+    $$f^2_x(y) = f(x)+\nabla f(x)^T(y-x) +
+    \frac{1}{2}(y-x)^T\nabla^2 f(x)(y-x).$$
+  \item As $q(h)$ is quadratic, we can apply the homework to see that
+    $$\nabla q(h) = \nabla f(x)+\nabla^2f(x)h,$$
+    which is zero when
+    $$h = -(\nabla^2f(x))^{-1}\nabla f(x).$$
+  \end{enumerate}
+\end{solution}
+\item What is the third order approximation to $f$ at $x$?
+\begin{solution}
+\item[]\Sol
+  $$
+  f(x+h)
+  \approx f(x) + \sum_{i=1}^n \frac{\partial f(x)}{\partial x_i}h_i
+  + \frac{1}{2}\sum_{i,j=1}^n \frac{\partial^2 f(x)}{\partial x_i\partial
+    x_j}h_ih_j
+  + \frac{1}{6}\sum_{i,j,k=1}^n \frac{\partial^3 f(x)}{\partial x_i\partial
+    x_j\partial x_k}h_ih_jh_k.
+  $$
+  As above we obtain $f_x^3(y)$ letting $h=y-x$.
+\end{solution}
+\item $(\star)$ Let $f:\RR\to\RR$ be convex and let $X$ be a random variable.
+  \begin{enumerate}
+  \item Assuming $X$ only takes finitely many values $x_1,\ldots,x_n$
+    with probabilities $p_1,\ldots,p_n$ that sum to 1. Prove that
+    $\E[f(X)]\geq f(\E[X])$.
+  \item Prove $\E[f(X)]\geq f(\E[X])$ for an arbitrary random variable $X$.
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item Consider the random vector $(X,f(X))$ taking values in $\RR^2$
+    on the graph of $f$.  Then we have
+    $$\E[(X,f(X))] = \sum_{i=1}^n p_i(x_i,f(x_i)) = (\E[X],\E[f(X)])$$
+    which is a convex combination of points on the graph of $f$, and
+    thus must lie in the epigraph of $f$.  This immediately gives
+    $$\E[f(X)] \geq f(\E[X]).$$
+  \item Although we only prove this for differentiable functions in
+    class, for any convex function $f:\RR\to\RR$ and any $v\in\RR$
+    there is a tangent line $g(x)=f(v)+ a(x-v)$ (for some $a\in\RR$)
+    that lies below $f$
+    (i.e., $g(x)\leq f(x)$ for all $x\in\RR$).  Letting $v=\E[X]$ we
+    obtain
+    $$f(\E[X])+a(x-\E[X]) \leq f(x)$$
+    for all $x\in\RR$, so we plug in $X$ for $x$ and take expectations
+    to obtain
+    $$\E[f(X)] \geq \E[f(\E[X])+a(X-\E[X])] = f(\E[X]).$$
+  \end{enumerate}
+\end{solution}
+\item Let $f:\RR^2\to\RR$ be smooth (at least twice continuously
+  differentiable) and assume that $x\in\RR$ has $\nabla f(x)=0$.
+  What do each of the following conditions on the Hessian $\nabla^2
+  f(x)$ imply?
+  \begin{enumerate}
+  \item $\nabla^2 f(x)$ has two positive eigenvalues.
+  \item $\nabla^2 f(x)$ has two negative eigenvalues.
+  \item $\nabla^2 f(x)$ has one positive and one negative eigenvalue.
+  \end{enumerate}
+\begin{solution}
+\item[]\Sol
+  \begin{enumerate}
+  \item Local minimum.
+  \item Local maximum.
+  \item Saddle point.
+  \end{enumerate}
+  We will prove the first of these statements to show how these types
+  of results are justified.
+  \begin{lem}[Multivariate Taylor's Theorem]
+    Let $f:\RR^n\to\RR$ with $f\in C^2$.  Then for all $x,h\in\RR^n$
+    we have
+    $$f(x+h) = f(x) + \nabla f(x)^Th +
+    \frac{1}{2}h^T\nabla^2f(x+sh)h,$$
+    for some $s\in(0,1)$.
+  \end{lem}
+  \begin{proof}
+    Fix $x,h\in\RR^n$ and define $g:\RR\to\RR$ by
+    $$g(t) = f(x+th).$$
+    Then by the one-dimensional version of Taylor's theorem we have
+    $$g(1) = g(0) + g'(0) + \frac{1}{2}g''(s),$$
+    for some $s\in(0,1)$.
+    Using the definition of $g$ and applying the chain rule we have
+    $$g'(t) = \nabla f(x+th)^Th\quad\text{and}\quad g''(t) =
+    h^T\nabla^2 f(x+th)h.$$
+    Plugging in we obtain
+    $$f(x+h) = f(x) + \nabla f(x)^Th + \frac{1}{2}h^T\nabla^2 f(x+sh)h.$$
+  \end{proof}
+  \begin{lem}
+    Let $A,B\in\RR^{n\times n}$ be symmetric.  Let
+    $\lambda_n^A$ and $\lambda_n^B$ denote the smallest eigenvalues of
+    $A$ and~$B$, respectively.  Then $|\lambda_n^A-\lambda_n^B|\leq\|A-B\|$.
+  \end{lem}
+  \begin{proof}
+    For any $x\in\RR^n$ with $\|x\|=1$ we have
+    $$|x^TBx-x^TAx| = |x^T(B-A)x| \leq \|B-A\|.$$
+    Since
+    $$\lambda_n^A = \min_{\|x\|=1} x^TAx$$
+    we have that
+    $$\lambda_n^B = \min_{\|x\|=1} x^TBx \leq
+    \min_{\|x\|=1}x^TAx+x^T(B-A)x \leq \lambda_n^A + \|B-A\|.$$
+    Reversing the roles of $A,B$ completes the proof.
+  \end{proof}
+  \begin{lem}
+    Let $f:\RR^n\to\RR$ with $f\in C^2$.  If $\nabla^2 f(x) \succ 0$ for
+    some $x\in\RR^n$ then there is a $\delta>0$ such that $\nabla^2
+    f(y)\succ 0$ for all $y$ with $\|x-y\|<\delta$.
+  \end{lem}
+  \begin{proof}
+    Fix $x\in\RR^n$.  Since $f\in C^2$, each of the second partial derivatives
+    $$\frac{\partial^2 f}{\partial x_i\partial x_j}$$
+    are continuous.  Thus for any $\epsilon>0$ there is a $\delta>0$ such that
+    $$\|\nabla^2 f(y) - \nabla^2 f(x)\|_F^2 < \epsilon$$
+    whenever $\|x-y\|<\delta$. [To see this note that for each $\frac{\partial^2
+        f}{\partial x_i\partial x_j}$ there is a $\delta_{ij}$ such
+      that $|\frac{\partial^2
+        f(y)}{\partial x_i\partial x_j}-\frac{\partial^2
+        f(x)}{\partial x_i\partial x_j}|^2 < \epsilon/n^2$.  Thus the
+      bound holds for $\|x-y\|_\infty < \min_{i,j}\delta_{ij}$.  But
+      $\|x-y\|_\infty \leq \|x-y\|_2$, so we can let $\delta=\min_{i,j}\delta_{ij}$.]
+    Let $\epsilon=\lambda_n^{\nabla^2 f(x)}/2$, where
+    $\lambda_n^{\nabla^2 f(x)}$ is the smallest eigenvalue of $\nabla^2 f(x)$.
+    Since the Frobenius norm upper bounds the spectral norm, the
+    previous lemma applies proving that
+    $$\lambda_n^{\nabla^2 f(y)} \geq \lambda_n^{\nabla^2 f(x)}-\epsilon = \lambda_n^{\nabla^2 f(x)}/2>0.$$
+  \end{proof}
+  \begin{thm}[Second Derivative Test for a Local Minimum]
+    Let $f:\RR^n\to\RR$ with $f\in C^2$ and suppose there is an
+    $x\in\RR^n$ with $\nabla f(x)=0$ and $\nabla^2 f(x)\succ 0$.  Then
+    $x$ is a local minimizer of $f$.
+  \end{thm}
+  \begin{proof}
+    By the previous lemma, there is a $\delta>0$ such that $\nabla^2
+    f(y)\succ 0$ for all $y$ with $\|y-x\|<\delta$.  For any such $y$
+    we can apply Taylor's theorem (letting $h=y-x$) to obtain
+    $$\begin{Array}{rcl}
+      f(y)
+      & = & f(x) + \nabla f(x)^T(y-x) + \frac{1}{2}(y-x)^T\nabla^2
+      f(x+t(y-x))(y-x)\\
+      & = & f(x) + \frac{1}{2}(y-x)^T\nabla^2
+      f(x+t(y-x))(y-x)\\
+      & \geq & f(x),
+    \end{Array}$$
+    for some $t\in(0,1)$.  The final inequality follows since
+    $\|x-(x+t(y-x))\|=\|t(y-x)\|<\delta$ so the Hessian is positive
+    definite and
+    $$\frac{1}{2}(y-x)^T\nabla^2 f(x+t(y-x))(y-x) \geq 0.$$
+  \end{proof}
+\end{solution}
+\item If $f,g$ are convex, is $h(x)=f(g(x))$ convex?
+\begin{solution}
+\item[]\Sol No.  Let $f,g:\RR\to\RR$ with $f(x)=-x$ and $g(x)=x^2$.
+  The statement is true if $f$ is also increasing.
+\end{solution}
+\item What is the relationship between $b\in\RR^n$ and $S=\{x\in\RR^n
+  : b^Tx \geq a\}$?
+\begin{solution}
+\item[]\Sol $S$ is a half-space on one side of a hyperplane.  $b$ is
+  orthogonal to the hyperplane pointing into the half-space.
+\end{solution}
+\item Let $S=\{x\in\RR^2 : (Ax)_i\geq0\text{ for $i=1,\ldots,m$}\}$
+  where $A\in\RR^{m\times n}$.  Give a geometric description of $S$.
+\begin{solution}
+\item[]\Sol It is an intersection of half planes, also called a
+  polyhedral set.  If the resulting set is bounded we call it a
+  convex polygon in $\RR^2$, or a convex polytope in higher dimensions.
+\end{solution}
+\end{enumerate}
+

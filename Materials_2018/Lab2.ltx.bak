@@ -1,0 +1,167 @@
+\section{Recitation 2}
+\begin{enumerate}
+%Use \usepackage[table]{xcolor} and you can color rows and columns
+\item Which of the following functions are linear?  If the function is
+  linear, what is the kernel?
+  \begin{enumerate}
+  \item $f_1:\RR^2\to\RR^2$ such that $f_1(a,b) = (2a,a+b)$
+  \item $f_2:\RR^2\to\RR^3$ such that $f_2(a,b) = (a+b,2a+2b,0)$
+  \item $f_3:\RR^2\to\RR^3$ such that $f_3(a,b) = (2a,a+b,1)$
+  \item $f_4:\RR^2\to\RR$ such that $f_4(a,b) = \sqrt{a^2+b^2}$
+  \item $f_5:\RR\to\RR$ such that $f_5(x) = 5x+3$
+  \end{enumerate}
+\item[]\Sol
+  \begin{enumerate}
+  \item Linear:
+    $$f_1(ca,cb)=(2ca,ca+cb)=c(2a,a+b)=cf_1(a,b)$$
+    for all $c\in\RR$ and
+    $$\begin{array}{rcl}
+      f_1(a_1+a_2,b_1+b_2)
+      & = & (2(a_1+a_2),(a_1+a_2)+(b_1+b_2))\\
+      & = & (2a_1,a_1+b_1)+(2a_2,a_2+b_2)\\
+      & = & f_1(a_1,b_1)+f_1(a_2,b_2).
+    \end{array}$$
+    Kernel is $\{0\}$.
+  \item Linear, similar proof.  Kernel is $\{(c,-c) : c\in\RR\}$.
+  \item Not linear, $f_3(0,0)=(0,0,1)$.
+  \item Not linear, $f_4(1,0)+f_4(0,1)=2$ and $f_4(1,1)=\sqrt{2}$.
+  \item Not linear, $f_5(0)=3$.
+  \end{enumerate}
+\item If $v,w$ are linearly independent, must $v,v+w$ also be
+  linearly independent?  Must it have the same span?
+\item[]\Sol Proven more generally in next question.
+\item Let $v_1,\ldots,v_m$ be linearly independent
+  vectors in $\RR^n$.  Prove that each of the following are
+  linearly independent and have the same span as $v_1,\ldots,v_m$.
+  \begin{enumerate}
+  \item $T=\{v_1,\ldots,v_{i-1},av_i,v_{i+1},\ldots,v_m\}$ where
+    $a\neq0$ and $1\leq i\leq m$ is any index.
+  \item $U=\{v_1,\ldots,v_{i-1},v_i+bv_j,v_{i+1},\ldots,v_m\}$ where
+    $j\neq i$ are indices, and $b\in\RR$.
+  \end{enumerate}
+\item[]\Sol
+  \begin{enumerate}
+  \item
+    \begin{proof}
+      First we prove linear independence.  Suppose
+      $$\sum_{k\neq i}\alpha_kv_k + \alpha_i(av_i)=0$$
+      for some $\alpha\in\RR^m$. Regrouping we have
+      $$\sum_{k\neq i}\alpha_kv_k + (\alpha_ia)v_i=0$$
+      showing $\alpha=0$ by the 
+      linear independence of $v_1,\ldots,v_m$ and using the fact that $a\neq0$.
+
+      Next we prove it has the same span.  Suppose $x\in\Span(v_1,\ldots,v_m)$ so
+      that
+      $$x = \sum_{k=1}^m \alpha_kv_k = \sum_{k\neq i}\alpha_kv_k + (\alpha_i/a)av_k$$
+      for some $\alpha\in\RR^m$.  This shows that $x\in\Span(T)$.
+      Thus we have proven $\Span(v_1,\ldots,v_m)\subseteq\Span(T)$.
+      To get the other direction, same argument can be applied
+      in reverse using $1/a$ in place of $a$.
+    \end{proof}
+  \item
+    \begin{proof}
+      First we prove linear independence.  Suppose
+      $$\sum_{k\neq i}\alpha_kv_k + \alpha_i(v_i+bv_j)=0$$
+      for some $\alpha\in\RR^m$.  Regrouping we have
+      $$0 = \sum_{k\neq i,j}\alpha_kv_k + \alpha_iv_i+(\alpha_j+\alpha_ib)v_j.$$
+      By the linear independence of $B$ we have $\alpha_k=0$ for
+      $k\neq j$ and $\alpha_j+\alpha_ib=0$.  But $\alpha_i=0$ so
+      $\alpha_j=0$ as well.
+
+      Next we prove it has the same span.  Suppose
+      $x\in\Span(v_1,\ldots,v_m)$ so that
+      $$x = \sum_{k=1}^m \alpha_kv_k = \sum_{k\neq i,j}\alpha_kv_k +
+      \alpha_i(v_i+bv_j) + (\alpha_j-b\alpha_i)v_j$$
+      for some $\alpha\in\RR^m$.  This shows that $x\in\Span(U)$.  The
+      same argument can be applied again by replacing $b$ with $-b$ to
+      obtain the other direction.
+    \end{proof}
+  \end{enumerate}
+\item Let $v_1,\ldots,v_m$ be linearly independent
+  vectors in a subspace $V$ of $\RR^n$.  Show that if they do not
+  span $V$ then
+  there is a vector $w\in V$ such that $v_1,\ldots,v_m,w$ are
+  linearly independent.
+\item[]\Sol
+  \begin{proof}
+    Choose $w\in V\setminus\Span(v_1,\ldots,v_m)$.  Suppose
+    $$\alpha_1v_1+\cdots+\alpha_mv_m+bw=0$$
+    for some $\alpha\in\RR^{m}$ and $b\in\RR$.  Rearranging we have
+    $$\alpha_1v_1+\cdots+\alpha_mv_m=-bw.$$
+    If $b=0$ then we must have $\alpha=0$ by the linear independence
+    of $v_1,\ldots,v_m$.  If $b\neq 0$ then we divide to obtain
+    $$(-\alpha_1/b)v_1+\cdots+(-\alpha_m/b)v_m=w$$
+    showing $w\in\Span(v_1,\ldots,v_m)$, a contradiction.
+  \end{proof}
+\item Let $v_1,\ldots,v_m$ span $\RR^n$ and suppose
+  $w_1,\ldots,w_p$ is a subset of $\RR^n$ with $p>m$.  Then $w_1,\ldots,w_p$
+  are linearly dependent.
+\item[]\Sol
+  \begin{proof}
+    Assume, for contradiction, that $w_1,\ldots,w_p$ are linearly independent.
+    Since $v_1,\ldots,v_m$ spans $\RR^n$, we can represent each $w_i$ as a
+    linear combination of the $v_j$:
+    $$\begin{array}{rcl}
+      w_1 & = & \alpha_{1,1}v_1 + \cdots + \alpha_{1,m}v_m \\
+      w_2 & = & \alpha_{2,1}v_1 + \cdots + \alpha_{2,m}v_m \\
+      \vdots & \vdots & \vdots \\
+      w_p & = & \alpha_{p,1}v_1 + \cdots + \alpha_{p,m}v_m.
+    \end{array}$$
+    The earlier exercise shows we can perform row-reduction (also
+    called Gaussian elimination) on the $p\times m$ matrix with
+    entries $\alpha_{i,j}$ and preserve linear independence.
+    Since $p>m$ row reduction will yield at least one row that is
+    entirely zero.  But a linearly independent set cannot have a zero
+    vector giving us a contradiction.  (See slides for more details on
+    row reduction.)
+  \end{proof}
+  Note, the proof only requires that
+  $w_1,\ldots,w_p\in\Span(v_1,\ldots,v_m)$,
+  so we actually obtain a more general result for arbitrary vector spaces.
+\item Prove that any basis for $\RR^n$ has length $n$.
+\item[]\Sol
+  \begin{proof}
+    The standard basis has length $n$.  If another basis $B$ has a different length,
+    then applying the previous exercise shows whichever of $B$ or the
+    standard basis is larger must be linearly dependent, a contradiction.
+  \end{proof}
+\item Let $V$ be a subspace of $\RR^n$.  Prove that $V$ has a basis.
+      [Recall that a basis for $V$ is a linearly independent
+      set of vectors that spans $V$.]
+\item[]\Sol
+  \begin{proof}
+    Our plan is to begin with $S_0=\emptyset$ and grow a basis for $V$
+    one vector at a time.
+    By exercise~4, if $V\neq\{0\}$ we can add a non-zero vector
+    $v_1\in V$ to obtain $S_1=\{v_1\}$.  Then we choose a vector
+    $v_2\in V\setminus\Span(v_1)$ and obtain $S_2=\{v_1,v_2\}$.
+    By exercise~4, we can always add a vector to $S_k$ and maintain
+    linear independence as long as $\Span(S_k)\neq V$.
+    Thus, we are done if we can show this
+    process of adding vectors must terminate in a finite number of steps.
+    But we cannot add more than $n$ vectors,
+    since the earlier result shows the resulting set would be linearly
+    dependent.
+  \end{proof}
+\item Let $B=\{v_1,\ldots,v_m\}$ and $C=\{w_1,\ldots,w_p\}$ be
+  disjoint linearly independent subsets of $\RR^n$ (with $m$ and $p$
+  elements, respectively).  Show that $B\cup C$ is linearly independent if
+  $\Span(B)\cap\Span(C)=\{0\}$.
+  [Disjointness is not necessary, but we include it to avoid confusion.]
+\item[]\Sol
+  \begin{proof}
+    Suppose we have
+    $$\sum_{i=1}^m \alpha_iv_i + \sum_{j=1}^p \beta_jw_j=0$$
+    for some $\alpha\in\RR^m$ and $\beta\in\RR^p$.  Then we can write
+    $$\sum_{i=1}^m \alpha_iv_i =\sum_{j=1}^p -\beta_jw_j.$$
+    If $\alpha\neq0$ then we must have $\sum_{i=1}^m \alpha_iv_i\neq0$
+    since $B$ is linearly independent.  But then
+    $\sum_{i=1}^m \alpha_iv_i\in\Span(B)$ and $\sum_{i=1}^m
+    \alpha_iv_i\in\Span(C)$
+    contradicting our assumption that $\Span(B)\cap\Span(C)=\{0\}$.
+    If $\alpha=0$ then we have
+    $$0 = \sum_{j=1}^p -\beta_jw_j$$
+    which forces $\beta=0$ by the linear independence of $C$.  Thus we
+    have shown $\alpha=\beta=0$ completing the proof of linear independence.
+  \end{proof}
+\end{enumerate}
