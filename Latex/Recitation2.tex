@@ -1,12 +1,15 @@
 
-\documentclass{beamer}
+\documentclass[table]{beamer}
+\usepackage{xcolor}
+
 \usepackage{amsthm}
 \usepackage[utf8]{inputenc}
-\usetheme{madrid}
+\usetheme{Madrid}
 \usepackage{../latex_style/packages}
 \usepackage{../latex_style/notations}
 \usepackage{outlines}
 \usepackage{enumitem}
+
 \usefonttheme{serif}
 \def\labelenumi{\theenumi}
 
@@ -224,7 +227,7 @@ $C = \begin{bmatrix}
 			1 & 0 & 4 & 1  \\
 			\end{bmatrix}$
   \item Five times first row, switch second and third row
-  \item First column becomes twice the second column plus one times third columns, second column stays the same, switch 3rd and fourth columns.
+  \item First column becomes twice the second column plus one times third column, second column stays the same, switch 3rd and fourth columns.
   \
   \end{enumerate}
 \end{solution}
@@ -274,7 +277,7 @@ Let $S$ and $U$ be invertible.\\
 \frametitle{Solutions 3: Invertibility}
 \begin{solution}
 \begin{enumerate}
-\item{$Ker(T) = Ker(TU)$. \textbf{False}}\\
+\item[2.]{$Ker(T) = Ker(TU)$. \textbf{False}}\\
 	Consider $T = \begin{bmatrix}
 			1 & 0 \\
 			0 & 0 \\
@@ -292,7 +295,7 @@ Let $S$ and $U$ be invertible.\\
 			0 \\
 			\end{bmatrix}\ |\ x\in\R\}$
 
-\item{$Ker(ST) = Ker(T)$}. \textbf{True}\\
+\item[3.]{$Ker(ST) = Ker(T)$}. \textbf{True}\\
 We'll show that $Ker(ST)\subset Ker(T).$\\
 Let $x \in Ker(ST)$.\\
 So, $STx = 0$.\\
@@ -302,5 +305,191 @@ $Ker(T)\subset Ker(ST)$ is straightforward.
 \end{enumerate}
 \end{solution}
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Matrix Multiplication Mechanics: Inner Products}
+(We haven't defined inner product yet)\\
+Let $A\in \R^{n\times k}$, $B \in \R^{k\times m}$\\
+Rows of first matrix ``line up" with columns of the second matrix.\\
+\Fonteight
+$\left[\begin{matrix}
+\rowcolor{red!20}    a_{1,1} & \hdots & a_{1,k} \\ 
+\rowcolor{blue!20}   a_{2,1} & \hdots & a_{2,k} \\ 
+                      \vdots & \hdots & \vdots \\
+\rowcolor{green!20}  a_{n-1,1} & \hdots & a_{n-1,k} \\ 
+\rowcolor{yellow!20} a_{n,1} & \hdots & a_{n,k} \\ 
+\end{matrix}\right]$
+$\left[\begin{array}{>{\columncolor{gray!20}}ccccc}
+b_{1,1} & b_{1,2} &\hdots & b_{1,m-1} & b_{1,m} \\ 
+\vdots & \vdots & \hdots & \vdots & \vdots \\
+b_{k,1} &  b_{k,2} &\hdots & b_{k,m-1} & b_{k,m} 
+\end{array}\right]$
+$=
+\left[\begin{array}{ccccc}
+{\cellcolor{red!20}}    \sum_{i=0}^k a_{1,i}b_{i,1} & \hdots & \hdots & & \\
+{\cellcolor{blue!20}}   \sum_{i=0}^k a_{2,i}b_{i,1} & \hdots & \hdots& & \\
+                        \vdots & \hdots & \hdots & & \\
+{\cellcolor{green!20}}  \sum_{i=0}^k a_{n-1,i}b_{i,1} & \hdots& \hdots& & \\
+{\cellcolor{yellow!20}} \sum_{i=0}^k a_{n,i}b_{i,1} & \hdots& \hdots& & \\
+\end{array}\right]
+$
+\end{frame}
+
+\begin{frame}
+\frametitle{Matrix Multiplication Mechanics: Inner Products}
+(We haven't defined inner product yet)\\
+Let $A\in \R^{n\times k}$, $B \in \R^{k\times m}$\\
+Rows of first matrix ``line up" with columns of the second matrix.\\
+\Fonteight
+$\left[\begin{matrix}
+\rowcolor{red!20}    a_{1,1} & \hdots & a_{1,k} \\ 
+\rowcolor{blue!20}   a_{2,1} & \hdots & a_{2,k} \\ 
+                      \vdots & \hdots & \vdots \\
+\rowcolor{green!20}  a_{n-1,1} & \hdots & a_{n-1,k} \\ 
+\rowcolor{yellow!20} a_{n,1} & \hdots & a_{n,k} \\ 
+\end{matrix}\right]$
+$\left[\begin{array}{c>{\columncolor{gray!20}}cccc}
+b_{1,1} & b_{1,2} &\hdots & b_{1,m-1} & b_{1,m} \\ 
+\vdots & \vdots & \hdots & \vdots & \vdots \\
+b_{k,1} &  b_{k,2} &\hdots & b_{k,m-1} & b_{k,m} 
+\end{array}\right]$
+$=
+\left[\begin{array}{ccccc}
+\hdots & {\cellcolor{red!20}}    \sum_{i=0}^k a_{1,i}b_{i,2} & \hdots & & \\
+\hdots & {\cellcolor{blue!20}}   \sum_{i=0}^k a_{2,i}b_{i,2} & \hdots & & \\
+\hdots &                        \vdots & \hdots & & \\
+\hdots & {\cellcolor{green!20}}  \sum_{i=0}^k a_{n-1,i}b_{i,2} & \hdots& & \\
+\hdots & {\cellcolor{yellow!20}} \sum_{i=0}^k a_{n,i}b_{i,2}& \hdots& & \\
+\end{array}\right]
+$
+\end{frame}
+
+\begin{frame}
+\frametitle{Matrix Multiplication Mechanics: Inner Products}
+(We haven't defined inner product yet)\\
+Let $A\in \R^{n\times k}$, $B \in \R^{k\times m}$\\
+Rows of first matrix ``line up" with columns of the second matrix.\\
+\Fonteight
+$\left[\begin{matrix}
+\rowcolor{red!20}    a_{1,1} & \hdots & a_{1,k} \\ 
+\rowcolor{blue!20}   a_{2,1} & \hdots & a_{2,k} \\ 
+                      \vdots & \hdots & \vdots \\
+\rowcolor{green!20}  a_{n-1,1} & \hdots & a_{n-1,k} \\ 
+\rowcolor{yellow!20} a_{n,1} & \hdots & a_{n,k} \\ 
+\end{matrix}\right]$
+$\left[\begin{array}{cccc>{\columncolor{gray!20}}c}
+b_{1,1} & b_{1,2} &\hdots & b_{1,m-1} & b_{1,m} \\ 
+\vdots & \vdots & \hdots & \vdots & \vdots \\
+b_{k,1} &  b_{k,2} &\hdots & b_{k,m-1} & b_{k,m} 
+\end{array}\right]$
+$=
+\left[\begin{array}{ccccc}
+\hdots & \hdots & {\cellcolor{red!20}}    \sum_{i=0}^k a_{1,i}b_{i,m}  \\
+\hdots & \hdots & {\cellcolor{blue!20}}   \sum_{i=0}^k a_{2,i}b_{i,m}  \\
+\hdots & \hdots &                        \vdots & \\
+\hdots & \hdots & {\cellcolor{green!20}}  \sum_{i=0}^k a_{n-1,i}b_{i,m}  \\
+\hdots & \hdots &{\cellcolor{yellow!20}} \sum_{i=0}^k a_{n,i}b_{i,m} \\
+\end{array}\right]
+$
+\end{frame}
+\begin{frame}
+\frametitle{Matrix Multiplication Mechanics: Inner Products}
+Inner Product method is the exact definition of matrix multiplication.\\
+Each entry of the resultant matrix is an inner product of a row of the first matrix and a column of the second matrix.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{More M.M.M: Linear Combination of Columns}
+Each column of the result is a linear combination of the columns of $A$.\\
+$
+\left[\begin{array}{>{\columncolor{red!20}}c>{\columncolor{blue!20}}cc>{\columncolor{green!20}}c >{\columncolor{yellow!20}}c}
+\vline & \vline & \hdots & \vline  & \vline \\ 
+\mathbf{a_1}    & \mathbf{a_2}    & \hdots & \mathbf{a_{k-1}}   &  \mathbf{a_k} \\
+\vline & \vline & \hdots & \vline  & \vline \\ 
+\end{array}\right]
+$
+$
+\left[\begin{matrix}
+{\cellcolor{red!20}}    b_{1,1}       & \hdots &   b_{1,m}  \\ 
+{\cellcolor{blue!20}}   b_{2,1}       & \hdots &   b_{2,m}  \\ 
+                          \vdots   & \vdots &   \vdots \\
+{\cellcolor{green!20}} b_{k-1,1}  & \hdots &   b_{k-1,m}  \\ 
+{\cellcolor{yellow!20}} b_{k,1}  & \hdots &   b_{k,m}
+\end{matrix}\right]
+$
+$=
+\left[\begin{array}{>{\columncolor{gray!20}}ccc}
+\vline  & \hdots   & \vline \\ 
+\sum_{i=1}^k \mathbf{a_i} b_{i,1}   & \hdots &  \sum_{i=1}^k \mathbf{a_i} b_{k,m} \\
+\vline  & \hdots  & \vline \\ 
+\end{array}\right]
+$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{More M.M.M: Linear Combination of Columns}
+Each column of the result is a linear combination of the columns of $A$.\\
+%{>{\columncolor{red!20}}c>{\columncolor{blue!20}}c>{\columncolor{green!20}}cc >{\columncolor{yellow!20}}c}
+$
+\left[\begin{array}{>{\columncolor{red!20}}c>{\columncolor{blue!20}}cc>{\columncolor{green!20}}c >{\columncolor{yellow!20}}c}
+\vline & \vline & \hdots & \vline  & \vline \\ 
+\mathbf{a_1}    & \mathbf{a_2}    & \hdots & \mathbf{a_{k-1}}   &  \mathbf{a_k} \\
+\vline & \vline & \hdots & \vline  & \vline \\ 
+\end{array}\right]
+$
+$
+\left[\begin{matrix}
+b_{1,1}    & \hdots &   {\cellcolor{red!20}}  b_{1,m}  \\ 
+b_{2,1}    & \hdots &   {\cellcolor{blue!20}}   b_{2,m}  \\ 
+  \vdots   & \vdots &   \vdots \\
+b_{k-1,1}  & \hdots &   {\cellcolor{green!20}} b_{k-1,m}  \\ 
+b_{k,1}    & \hdots &   {\cellcolor{yellow!20}}b_{k,m}
+\end{matrix}\right]
+$
+$=
+\left[\begin{array}{cc>{\columncolor{gray!20}}c}
+\vline  & \hdots   & \vline \\ 
+\sum_{i=1}^k \mathbf{a_i} b_{i,1}   & \hdots &  \sum_{i=1}^k \mathbf{a_i} b_{k,m} \\
+\vline  & \hdots  & \vline \\ 
+\end{array}\right]
+$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{More M.M.M: Linear Combination of Columns}
+One dimensional case:\\
+$
+\left[\begin{array}{>{\columncolor{red!20}}c>{\columncolor{blue!20}}cc>{\columncolor{green!20}}c >{\columncolor{yellow!20}}c}
+\vline & \vline & \hdots & \vline  & \vline \\ 
+\mathbf{a_1}    & \mathbf{a_2}    & \hdots & \mathbf{a_{k-1}}   &  \mathbf{a_k} \\
+\vline & \vline & \hdots & \vline  & \vline \\ 
+\end{array}\right]
+$
+$
+\left[\begin{matrix}
+{\cellcolor{red!20}}    b_{1,1}  \\ 
+{\cellcolor{blue!20}}   b_{2,1}  \\
+                          \vdots \\
+{\cellcolor{green!20}} b_{k-1,1} \\
+{\cellcolor{yellow!20}} b_{k,1}  \\
+\end{matrix}\right]
+$
+$=
+\left[\begin{array}{>{\columncolor{gray!20}}c}
+\vline \\
+\sum_{i=1}^k \mathbf{a_i} b_{i,1} \\
+\vline   \\
+\end{array}\right]
+$\\
+
+Result is in the span of columns of A!
+(Keep this in mind for later).
+\end{frame}
+
+
 
 \end{document}
