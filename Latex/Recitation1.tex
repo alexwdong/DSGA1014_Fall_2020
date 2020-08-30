@@ -1,21 +1,35 @@
 \documentclass{beamer}
 \usepackage{amsthm}
 \usepackage[utf8]{inputenc}
-\usetheme{madrid}
+\usetheme{Madrid}
 \usepackage{../latex_style/packages}
 \usepackage{../latex_style/notations}
 \usepackage{outlines}
+\usepackage{enumitem}
+\renewenvironment{itemize}
 \usefonttheme{serif}
 \def\labelenumi{\theenumi}
+\usefonttheme{serif}
 
 %\setbeamertemplate{itemize items}[default]
 %\setbeamertemplate{enumerate items}[default]
 
 % define smaller font command
-\newcommand\Fonteight{\fontsize{8}{9.6}\selectfont}
+\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
+\newcommand\fonteight{\fontsize{8}{9.6}\selectfont}
+\newcommand\fontten{\fontsize{10}{1.2}\selectfont}
+
 %define enumerate with periods
 \renewenvironment{enumerate}%
-{\begin{list}{\arabic{enumi}.}% <------ dot here
+{\begin{list}{\arabic{enumi}.}%  \langle ------ dot here
+      {\setlength{\leftmargin}{2.5em}%
+       \setlength{\itemsep}{-\parsep}%
+       \setlength{\topsep}{-\parskip}%%
+       \usecounter{enumi}}%
+ }{\end{list}}
+%define itemize with arrows
+\renewenvironment{itemize}%
+{\begin{list}{$\blacktriangleright$}%  \langle ------ dot here
       {\setlength{\leftmargin}{2.5em}%
        \setlength{\itemsep}{-\parsep}%
        \setlength{\topsep}{-\parskip}%%
@@ -23,7 +37,7 @@
  }{\end{list}}
 
 %Information to be included in the title page:
-\title{Recitation 1 }
+\title{Recitation 1}
 \author{Alex Dong}
 \institute{CDS, NYU}
 \date{Fall 2020}
@@ -55,6 +69,14 @@
 %----Slide 2-----------------------
 \begin{frame}
 \frametitle{Announcements}
+Welcome!
+\begin{itemize}
+\item My Office hours: TBA (once I figure my schedule out)
+\item Rotating cohorts - if you are not scheduled to be in person, please join the online zoom call (w/ Carles or Irina)
+\item Recitations are for practice problems
+\item You will have time in recitation to solve the problems.
+\item Recitations will be released so you can look over/solve problems in advance.
+\end{itemize}
 \end{frame}
 
 %----Slide 3-----------------------
@@ -83,7 +105,7 @@ First year MSDS students are \textit{highly encouraged} to take this class.
 
 \begin{definition}[Vector space]
 	    $V$ is a vector space over field $F$ when
-	    \Fonteight
+	    \fonteight
 		\begin{enumerate}
 		\item[1.] Closure under Addition: $x+y \in V$
 		\item[2.] Sum is commutative ($x+y = y+x$) and associative $x+(y+z)= (x+y)+z$
@@ -105,14 +127,20 @@ Optional: prove (after class) that $\R^3$ with standard definitions for addition
 %----Slide 5-----------------------
 \begin{frame}
 \frametitle{Concept Review: Vector Spaces}
-In this class,
+\begin{itemize}
+\item In this class,
 \begin{itemize}
 \item Our field is always $\R$. ($\C$ is also a field.)
 \item Standard definitions for vector addition, and scalar multiplication.
 \item But, V is (usually) $\R^n$, or (sometimes) $\R^{n\times n}$.
 \end{itemize}
 
-Everything in linear algebra is in a vector space.
+\item Everything in linear algebra is in a vector space!
+\item (!) A recurring concept in data science is to ``vectorize'' problems
+\begin{itemize}
+\item If you can transform/reframe your problem in linear algebra, you can (attempt) to solve it!
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 %----Slide 6-----------------------
@@ -125,10 +153,12 @@ Everything in linear algebra is in a vector space.
 		\item[2.] Closure under Scalar Multiplication: $\alpha x \in V$
 	\end{enumerate}
 \end{definition}
-A subspace is also a vector space!\\
-Everything in linear algebra is in a vector space. \\ 
-Anything \textit{interesting} in linear algebra is in a subspace. \\
-Subspaces are a recurring concept throughout this entire course.
+\begin{itemize}
+\item A subspace is also a vector space!\\
+\item Everything in linear algebra is in a vector space. \\ 
+\item Anything \textit{interesting} in linear algebra is in a subspace. \\
+\item Subspaces are a recurring concept throughout this entire course. \\
+\end{itemize}
 \end{frame}
 
 %----Slide 7-----------------------
@@ -161,7 +191,6 @@ Subspaces are a recurring concept throughout this entire course.
 
 \frametitle{Solutions 1: Subspaces, Span }
 
-
  Recall that $\R^2=\{(x,y) : x,y\in\R \}$ can be thought
   of as the $xy$-plane.  Consider the two vectors $v=(1,1)$ and
   $w=(-1,2)$.  Describe the following sets geometrically.  Which are
@@ -190,16 +219,17 @@ Subspaces are a recurring concept throughout this entire course.
 \item Let $v_1,v_2,v_3,v_4$ (all distinct) $\in \R^3$.\\
 Let $C_1 = \{v_1,v_2\}; C_2 = \{v_3,v_4\}$. \\
 If $C_1$ and $C_2$ are both linearly independent, 
-what are the possible values for $dim(Span\{v_1,v_2,v_3,v_4\})$? (No formal proof necessary.)
-
+what are the possible values for $dim(Span\{v_1,v_2,v_3,v_4\})$? (No formal proof necessary)
+\smallskip
 \item Let $v_1,...,v_n \in \R^n$ be a basis of $\R^n$. \\
 Prove that for $x \in R^n$, there exists unique $\alpha_1,...,\alpha_n$
 such that $x = \sum_{i=0}^n \alpha_i v_i$.
-
+\smallskip
 \item Let $v_1,...,v_m \in \R^n$ be linearly dependent. \\
 Prove that for $x \in Span(v_1,...,v_m)$, 
 there exist infinitely many $\alpha_1,...,\alpha_m \in \R$ 
 such that $x = \sum_{i=0}^m \alpha_i v_i$.
+\smallskip
 \item True or False: If $B=\{v_1,\ldots,v_n\}$ is a basis for $\R^n$,
   and $W$ is a subspace of $\R^n$, then some subset of $B$ is a basis
   for $W$.
@@ -255,7 +285,7 @@ Prove that for $x \in Span(v_1,...,v_m)$,
 there exist infinitely many $\alpha_1,...,\alpha_m \in \R$ 
 such that $x = \sum_{i=0}^m \alpha_i v_i$.
 \begin{solution}
-    \Fonteight
+    \fonteight
     By assumption, $x\in Span(v_1,\ldots,v_m)$. So
     \begin{center}
     $\exists \beta_1,...,\beta_m$ s.t $x=\sum_{i=1}^m \beta_iv_i$
@@ -287,8 +317,6 @@ False. Consider $B=\{(1,0),(0,1)\}$ and $W=Span((1,1))$.
 
 \end{enumerate}
 \end{frame}
-
-
 
 %----Slide 14-----------------------
 
