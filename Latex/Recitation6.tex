@@ -1,0 +1,122 @@
+\documentclass{beamer}
+\usepackage{amsthm}
+\usepackage[utf8]{inputenc}
+\usetheme{Madrid}
+\usepackage{../latex_style/packages_old}
+\usepackage{../latex_style/notations_old}
+\usepackage{outlines}
+\usepackage{enumitem}
+\renewenvironment{itemize}
+\usefonttheme{serif}
+\def\labelenumi{\theenumi}
+\usefonttheme{serif}
+
+%\setbeamertemplate{itemize items}[default]
+%\setbeamertemplate{enumerate items}[default]
+
+% define smaller font command
+\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
+\newcommand\fonteight{\fontsize{8}{9.6}\selectfont}
+\newcommand\fontten{\fontsize{10}{1.2}\selectfont}
+
+%define enumerate with periods
+\renewenvironment{enumerate}%
+{\begin{list}{\arabic{enumi}.}%  \langle ------ dot here
+      {\setlength{\leftmargin}{2.5em}%
+       \setlength{\itemsep}{-\parsep}%
+       \setlength{\topsep}{-\parskip}%%
+       \usecounter{enumi}}%
+ }{\end{list}}
+%define itemize with arrows
+\renewenvironment{itemize}%
+{\begin{list}{$\blacktriangleright$}%  \langle ------ dot here
+      {\setlength{\leftmargin}{2.5em}%
+       \setlength{\itemsep}{-\parsep}%
+       \setlength{\topsep}{-\parskip}%%
+       \usecounter{enumi}}%
+ }{\end{list}}
+
+%Information to be included in the title page:
+\title{Recitation 6}
+\author{Alex Dong}
+\institute{CDS, NYU}
+\date{Fall 2020}
+
+
+\makeatletter
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor\expandafter\ifblank\expandafter{\beamer@shortinstitute}{}{~~(\insertshortinstitute)}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\setbeamertemplate{navigation symbols}{}
+\makeatother
+
+\begin{document}
+%1
+\frame{\titlepage} 
+%2
+
+\begin{frame}
+\frametitle{Etymology}
+
+\begin{itemize}
+\item \textit{eigen}values and \textit{eigen}vectors
+\item What does \textit{eigen} mean anyway?
+\item German word for...
+\begin{enumerate}
+\item own
+\item innate
+\item peculiar
+\item \textbf{intrinsic}
+\end{enumerate}
+\item A square matrix `owns' certain vectors... or there are certain vectors that are intrinsic to a matrix.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Importance of Eigenvalues and Eigenvectors}
+\center{!!! \textit{\textbf{SERIOUSLY IMPORTANT}} !!!}\\
+\bigskip
+\begin{itemize}
+\item Eigen-val/vec will show up \textit{continuously} throughout this course
+\item Connections to...
+\begin{itemize}
+\item Projections and Orthogonal Projections (Lec 4)
+\item Markov Chains (Lec 6)
+\item Spectral Theorem (HW 6, Lec 7)
+\item SVD (Lec 7)
+\item Spectral Clustering (!!??) (Lec 8)
+\item Positive definite and positive semi-definite matrices (Lec 10,11)
+\end{itemize}
+\item Many other applications not covered in this course
+\item Literally cannot stress this enough
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{$Av=\lambda v$. So what's the big deal?}
+\begin{itemize}
+\item Square matrices are important enough to get their own name - \textit{operators}.
+\item Sometimes a matrix A `prefers' certain directions
+\item These directions are useful 'anchors' to understanding what a matrix does.
+\item (&)
+\end{itemize}
+
+
+
+\end{frame}
+\end{document}
