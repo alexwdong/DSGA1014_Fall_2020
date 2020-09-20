@@ -70,12 +70,14 @@
 
 \begin{frame}
 \frametitle{Norms}
-Norms measure distances!
-Think about all the properties of distance that make sense.
+\begin{itemize}
+\item Norms measure distances!
+\item Think about all the ``natural" properties of distance that make sense.
 \begin{itemize}
 \item distance = 0 means at the same point
 \item distance is always non-negative
-\item distance follows triangle inequality (well... at least in euclidean space)
+\item distance follows triangle inequality (at least in Euclidean space)
+\end{itemize}
 \end{itemize}
 
 \end{frame}
@@ -86,37 +88,49 @@ Shorthand way to remember what the properties do.
 \begin{definition}[Norm]
 	A norm $\| \cdot \|$ on $V$ verifies the following points:
 	\begin{enumerate}
-		\item \emph{Triangular inequality}: $\|u + v\| \leq \|u\| + \|v\|$ \hfill "Euclidean space"
-		\item \emph{Homogeneity}: $\| \alpha v \| = |\alpha|\times \| v\|$ \hfill "farther actually means farther"
-		\item \emph{Positive definiteness}: if $\|v\| = 0 \implies v=0$. \hfill "Non-negative"
+		\item \emph{Triangular inequality}: $\|u + v\| \leq \|u\| + \|v\|$ \hfill ``Euclidean space"
+		\item \emph{Homogeneity}: $\| \alpha v \| = |\alpha|\times \| v\|$ \hfill ``farther actually means farther"
+		\item \emph{Positive definiteness}: if $\|v\| = 0 \implies v=0$. \hfill ``Non-negative"
 	\end{enumerate}
 \end{definition}
 \end{frame}
 
 \begin{frame}
 \frametitle{Inner Products}
-Inner products measure angles! 
-... but not directly.
-$$cos(\theta) = \frac{ \langle u,v \rangle }{\|u\| \|v\|}$$
-or
-$$ \langle u,v \rangle \ =\ cos(\theta) \|u\|\|v\|$$
-When $u,v$ are unit vectors, inner product gives a measure for angle between vectors.
+\begin{definition}[Inner product]
+	Let $V$ be a vector space.
+	An inner product on $V$ is a function $\langle \cdot, \cdot \rangle$ from $V \times V$ to $\R$ that verifies the following points:
+	\begin{enumerate}
+		\item \emph{Symmetry}: $\langle u, v \rangle = \langle v, u\rangle$ for all $u,v \in V$.
+		\item \emph{Linearity}: $\langle u+v, w \rangle = \langle u, w\rangle + \langle v, w\rangle$ and $\langle \alpha v, w \rangle = \alpha \langle v, w \rangle$ for all $u,v,w \in V$ and $\alpha \in \R$.
+		\item \emph{Positive definiteness}: $\langle v, v\rangle \geq 0$ with equality if and only if $v = 0$.
+\end{enumerate}
+\end{definition}
+\begin{itemize}
+\item Definition of inner product does not reveal it's purpose.
+\item \textbf{In this class, we always use the Euclidean inner product.}
+\begin{itemize}
+\item $\langle u,v \rangle = u^Tv$
+\end{itemize}
+\item (!!) Inner products are (indirectly) used for a notion of angles.
+\item $cos(\theta) = \frac{ \langle u,v \rangle }{\|u\| \|v\|}$
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Inner Products in Machine Learning}
+\frametitle{Inner Products in Machine Learning (\&)}
 \begin{itemize}
-\item Angles can be used as a measure of similarity
+\item Inner products can be used as a measure of similarity
 \item Kernel Tricks (\&) - Increase Data Complexity
 \begin{itemize}
 \item Sometimes you have to calculate  $x_{old}^T x_{new}$, equivalently $ \langle x_{old},x_{new} \rangle $
 \item You can replace the inner product with a inner product in a higher dimensional space
 \item Instead of calculating $ \langle x_{old},x_{new} \rangle $, define a function $K$ and calculate $ \langle K(x_{old}),K(x_{new}) \rangle $
-\item If you pick ''the right" higher dimensional space, your data can be a lot easier to work with
-\item (This is just for your general knowledge)
-\item (\&) denotes extra material not covered in this course
+\item If you pick ``the right" higher dimensional space, your data can be a lot easier to work with
 \end{itemize}
 \end{itemize}
+\footnotetext{(\&) denotes extra material not covered in this course}
+
 \end{frame}
 
 
@@ -146,10 +160,11 @@ $$ \|Ax\| \leq \|x\|\sqrt{\sum_{i=1}^m \sum_{j=1}^n} A_{i,j}^2$$
 \item[i.] $f(x,y) = x_1y_2+x_2y_3+x_3y_1$ \hfill False\\
 Consider $u=[1,0,0]^T$ and $v=[0,1,0]^T$.\\
 $ \langle u,v \rangle =1$, but $ \langle v,u \rangle  = 0$. (Not symmetric)
+\medskip
 \item[ii.] $f(x,y) = x_1^2y_1^2+x_2^2y_2^2+x_3^2y_3^2$ \hfill False\\
 Consider $v = [1,0,0]^T.$ \\
 $ \langle 2v,v \rangle  = 4$, but $2 \langle v,v \rangle  = 2$. (Not linear)
-
+\medskip
 \item[iii.] $f(x,y) = x_1y_1+x_3y_3$ \hfill False \\
 Consider $v = [0,1,0]^T$. \\
  $ \langle v,v \rangle  = 0$, but $v\neq0$. (Not positive definite)
@@ -166,24 +181,29 @@ Consider $v = [0,1,0]^T$. \\
 \item[2.] For $A \in \R^{m\times n}$ and $x\in \R^n$, prove that
 $$ \|Ax\| \leq \|x\|\sqrt{\sum_{i=1}^m \sum_{j=1}^n} A_{i,j}^2$$
 \begin{solution}
-and $A = \begin{bmatrix}
+Let $A = {\fonteight\begin{bmatrix}
 			\horzbar    & \mathbf{a_1}^T    & \horzbar  \\
 			\vdots    & \vdots & \vdots  \\
 			\horzbar    & \mathbf{a_m}^T    & \horzbar   \\
-		 \end{bmatrix}$
+		 \end{bmatrix}}$
 	and
 	$x =  \begin{bmatrix}
 			\vline \\
 			 x \\   
 			\vline \\ 
-		 \end{bmatrix}$ .\\
-From matrix multiplication, observe that $Ax = \sum_{i=1}^m  \langle \mathbf{a_i},x_i \rangle $.\\
+		 \end{bmatrix}$ .
+Observe that 
+$Ax =  \begin{bmatrix}
+			 \langle \mathbf{a_1},x \rangle \\
+			 \vdots \\   
+			\langle \mathbf{a_m},x \rangle \\ 
+		 \end{bmatrix}$ .
 Now,\\
-\qquad $\|Ax\|^2 = \sum_{i=1}^m  \langle \mathbf{a_i},x \rangle ^2$ \\
-\qquad $\|Ax\|^2 \leq \sum_{i=1}^n \|\mathbf{a_i}\|^2 \|x\|^2$ \qquad by Cauchy-Schwarz \\
-\qquad $\|Ax\| \leq (\sum_{i=1}^n \|\mathbf{a_i}\|^2 \|x\|^2)^{.5}$\\
-\qquad $\|Ax\| \leq \|x\|(\sum_{i=1}^n \|\mathbf{a_i}\|^2 )^{.5}$ \\
-\qquad $\|Ax\| \leq \|x\|(\sum_{i=1}^n \sum_{j=1}^m A_{i,j})^{.5}$ \qquad by definition of $\mathbf{a_i}$
+\qquad $\|Ax\|^2 = \sum_{i=1}^m  |\langle \mathbf{a_i},x \rangle ^2|$ \qquad by definition of norm \\
+\qquad $\|Ax\|^2 \leq \sum_{i=1}^m \|\mathbf{a_i}\|^2 \|x\|^2$ \qquad by Cauchy-Schwarz \\
+\qquad $\|Ax\| \leq (\sum_{i=1}^m \|\mathbf{a_i}\|^2 \|x\|^2)^{.5}$\\
+\qquad $\|Ax\| \leq \|x\|(\sum_{i=1}^m \|\mathbf{a_i}\|^2 )^{.5}$ \\
+\qquad $\|Ax\| \leq \|x\|(\sum_{i=1}^m \sum_{j=1}^n A_{i,j})^{.5}$ \qquad by definition of $\mathbf{a_i}$
 
 \end{solution}
 \end{enumerate}
@@ -194,9 +214,9 @@ Now,\\
 \begin{itemize}
 \item Angles can be used as a measure of similarity
 \item Vectors $u,v$ are orthogonal if and only if $ \langle u,v \rangle =0$
-\item Vectors are orthogonal $\implies$ vectors are in as different directions as possible
+\item Vectors are orthogonal $\implies$ vectors are as dissimilar as possible
 \item Orthogonal coordinate systems are nice because we can view each coordinate ``independently'' (we will prove later).
-\item Gram-Schmidt Process allows us to change any basis into an orthonormal basis.
+\item Gram-Schmidt Process (Lec 5) allows us to change any basis into an orthonormal basis.
 \end{itemize}
 \end{frame}
 
@@ -206,7 +226,6 @@ Now,\\
 \begin{itemize}
 \item Projections form an important part of linear algebra.
 \begin{itemize}
-\fonteight
 \item We can view the action of a matrix and how it affects a certain subspace
 \item We can simplify our data by picking the subspace ``closest'' to the data (PCA, Lec 7)
 \item We can find the best-fit line/plane/subspace  (Linear regression, Lec 9)
@@ -214,7 +233,6 @@ Now,\\
 \medskip
 \item \textit{Orthogonal} projections are a special kind of projection
 \begin{itemize}
-\fonteight
 \item They preserve the original vector components (in the orthogonal basis)
 \item Practice question on this later
 
@@ -227,17 +245,14 @@ Now,\\
 \frametitle{Idempotence}
 Lets take a step back.\medskip
 \begin{itemize}
-\item  $P_S$ is an orthogonal projection $\iff$ $P_S = VV^T$
+\item $P_S$ is an \textit{orthogonal} projection $\iff$ $P_S = VV^T$
 \begin{itemize}
  \item V has orthonormal columns that form a basis for $S$.\\
 \end{itemize}
 \item There is a more general definition of a projection - known as \textit{idempotence}.
 
 \begin{definition}[Idempotence]
-An matrix P is idempotent when
-	$$
-	P^2=P
-	$$
+An matrix P is idempotent when $P^2=P$.
 \end{definition}
 \end{itemize}
 An idempotent matrix is also called a \textit{projection} or \textit{projection matrix}.
@@ -246,11 +261,9 @@ An idempotent matrix is also called a \textit{projection} or \textit{projection 
 \begin{frame}
 \frametitle{Questions 2: Orthogonal Projections vs Idempotence}
 \begin{definition}[Idempotence]
-A square matrix P is idempotent when
-	\begin{center}
-	$P^2=P$
-	\end{center}
+An matrix P is idempotent when $P^2=P$.
 \end{definition}
+\bigskip
 \begin{enumerate}
 \item Show that $X(X^TX)^{-1}X^T$ is idempotent.
 \item Show that all orthogonal projections are idempotent.
@@ -270,6 +283,7 @@ P^2 &= (X(X^TX)^{-1}X^T)(X(X^TX)^{-1}X^T) \\
 &= X(X^TX)^{-1}X^T
 \end{align*}
 \item Show that all orthogonal projections are idempotent.\\
+\medskip
 Let $P$ be an orthogonal projection.\\
 Recall that all orthogonal projections take the form $VV^T$, where $V\in \R^{n\times k}$ has orthonormal columns. \\
 Note that $V^TV = I_k$, the identity matrix in $\R^{k\times k}$. \\
@@ -395,7 +409,7 @@ This implies that $\beta_i =  \langle v,u_i \rangle $.\\
 
 
 \begin{frame}
-\frametitle{Questions: Orthogonality}
+\frametitle{Solutions: Orthogonality}
 \begin{solution}
 Let U be the subspace of $\R^n$ with orthonormal basis $u_1,...,u_k$.
 \begin{enumerate}
@@ -414,7 +428,7 @@ So $P_U(v)\leq \|v\|$
 \end{frame}
 
 \begin{frame}
-\frametitle{Questions: Orthogonality}
+\frametitle{Solutions: Orthogonality}
 \begin{solution}
 Let U be the subspace of $\R^n$ with orthonormal basis $u_1,...,u_k$.
 \begin{enumerate}
@@ -430,6 +444,64 @@ v-P_U(v) &= \sum_{i=1}^n  \langle v,u_i \rangle u_i - \sum_{i=1}^k \langle v,u_i
 \end{enumerate}
 \end{solution}
 \end{frame}
+
+\begin{frame}
+\frametitle{Questions: Orthogonal Complements}
+Let $S, U$ be subspaces of a vector space $V$.\\
+Prove the following statement:
+\begin{enumerate}
+
+\item $S\subset U \implies S^\perp \supset U^\perp$
+\end{enumerate}
+\bigskip
+Let $A\in\R^{n\times m}$.
+Assume the Euclidean inner product.
+\begin{enumerate}
+\item[2.] (!) Prove that $Im(A^T) = Ker(A)^\perp$.
+\end{enumerate}
+\bigskip
+\qquad (Hint: $\implies$ is easy. Use (1) for $\impliedby$)\\
+\end{frame}
+
+\begin{frame}
+\frametitle{Solutions: Orthogonal Complements}
+\begin{enumerate}
+\item $S\subset U \implies S^\perp \supset U^\perp$
+\end{enumerate}
+\begin{solution}
+Let $x\in U^\perp$, and $z\in S$. \\
+Since $z\in S$ and $S\subset U$, then $z\in U$.\\
+Now, since $x\in U^\perp$ and $z \in U$, then $\langle x,z \rangle$ = 0.\\
+So $x \in S^\perp$.
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solutions: Orthogonal Complements}
+\begin{enumerate}
+\item[2.] Prove that $Im(A^T) = Ker(A)^\perp$.
+\end{enumerate}
+\begin{solution}
+$\implies$ \\
+Let $x\in \Im(A^T)$. Then $\exists y$ s.t $x = A^Ty$. We show $x\in Ker(A)^\perp$.\\
+Let $v\in Ker(A)$. Then $Av=0$. \\
+Consider $\langle x,v \rangle$. \\
+\qquad $\langle x,v \rangle = x^Tv = y^TAv =\langle y,Av \rangle =\langle y,0 \rangle = 0$
+Then $x\in Ker(A)^\perp$.
+$\impliedby$.\\
+We use 1. to show $Im(A^T)^\perp \subset Ker(A)$ instead.\\
+Let $x\in Im(A^T)^\perp$. \\
+Consider $Ax$. We show $\langle x,A^Ty \rangle = 0$ for all $y\in \R^n$. \\
+Since $x\in Im(A^T)^\perp$, then $\forall y\in \Im(A^T)$, $\langle x,y \rangle = x^Ty = 0$.\\
+Consider $\|Ax\|$.\\ 
+\qquad $\|Ax\| = x^TA^TAx = x(A^TAx)$.\\
+Since $A^TAx \in Im(A^T)$, then $\|Ax\| = 0$, so $Ax=0$.\\ 
+Now, by 1, we can conclude that $Ker(A)^\perp \subset Im(A^T)$.
+
+\end{solution}
+\end{frame}
+
+
 
 
 \end{document}
